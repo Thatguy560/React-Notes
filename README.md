@@ -20,25 +20,244 @@
 
 # React-Interview-Questions
 
-<!-- ## 1. What is the difference between between state and props?
+## 1. What are the benefits of a single page application?
 
+- Battery reusability
+- Optimization 
+- Client-side rendering
+- User experience
+- Easy debugging
+- Performance
+- Performance
+- Less complex implementation 
+- Better Caching
+- Better SEO Optimization 
 
+An important feature of single-page applications is performance. They get a performance boost by loading HTML, CSS, and JavaScript resources as soon as the website is loaded.
 
-## 2. What are the benefits of a single page application?
+The reason is that when users come to an application, they need the shortest possible wait time so that they can do their work and leave. The performance reflects the demand for the application. 
 
+If the application does not provide the necessary performance, users may leave that app and choose another platform. That's one of the primary reasons developers choose single-page apps nowadays. 
 
+## 2. What is the difference between between state and props?
+
+![StateVsProps](Screenshot%202021-07-13%20at%2014.03.33.png)
+
+- State can be used to hold information about the components.Whilst Props are used to pass data from one component to other components as arguments.
+- State is mutable (can be changed) whilst Props are immutable (can't be changed).
+- Child components can't be accessed in the state. Whilst with props Child components can be accessed. 
+- Stateless components cannot have state. Whilst props have props.
 
 ## 3. What are the components in React?
 
-Components are the building blocks of any React application
+Components are the building blocks of any React application, and a single page app usually consists of multiple components. A component is essentially a piece of user interface. It splits the user interface into independent, re-usable parts that can be processed separately.  
+
+There are two types of Components in React:
+
+![Components](https://www.simplilearn.com/ice9/free_resources_article_thumb/react-component.JPG)
+
+- **Functional Components** - These types of components have no state of their own and only contain render methods, and therefore are only called **stateless components.** They may derive data from other components as props (properties).
+
+```JavaScript
+function Greeting(props) {
+    return <h1>Welcome to {props.name}</h1>
+}
+```
+
+- **Class Components** - These type of components can hold and manage their own state and have a separate render method to return JSX on the screen. They are also called Stateful components as they can have a state. 
+
+```JavaScript
+class Greeting extends React.Component {
+    render() {
+        return <h1>Welcome to {this.props.name}</h1>
+    }
+}
+```
 
 ## 4. What is the use of Render() in React?
 
+- It is required for each component to have a render() function. This function returns the HTML which is to be displayed in the component.
 
+- If you need to render more than one element, all of the elements must be inside one parent tag like ```<div> or <form>.```
 
-## 5. What is JSX? -->
+![Rendering Components](https://www.simplilearn.com/ice9/free_resources_article_thumb/default-app.JPG)
 
+## 5. What is a state in React?
 
+- The state is a built-in React Object that is used to contain data or information about the component. The state in a component can change over time, and whenever it changes the component re-renders.
+- The change in state can happen as a response to user action or system-generated events. It determines the behavior of the component and how it will render. 
+
+## 6. How do you implement state in React?
+
+![State](https://www.simplilearn.com/ice9/free_resources_article_thumb/state-holds.JPG)
+
+- State holds the data that a component renders on the web app.
+- We can access the state properties e.g. this.state.car
+
+## 7. How do you update the state of a component?
+
+We can update the state of a component by using the built-in **'setState()** method:
+
+![updatingState](https://www.simplilearn.com/ice9/free_resources_article_thumb/class-app.JPG)
+
+## 8. What is JSX?
+
+JSX is a syntax extension of JavaScript. It is used with React to describe what the user interface should look like. By using JSX, we can write HTML structures in the same file that contains JavaScript code.
+
+![JSX](https://www.simplilearn.com/ice9/free_resources_article_thumb/what-is-jsx.JPG)
+
+## 8. What are Props in React?
+
+- Props are short for Properties. It is a React built-in object that stores the value of attributes of a tag and works similarly to HTML attributes. 
+- Props provide a way to pass data from one component to another component. Props are passed to the component in the same way as arguments are passed in a function. 
+
+## 9. What is a higher order component in React?
+
+A higher-order component acts as a container for other components. This helps to keep components simple and enables re-usability. They are generally used when multiple components have to use a common logic.
+
+## 10. How can you embed two or more components into one?
+
+We can embed two or more components into one using this method:
+
+![embeddingComponents](https://www.simplilearn.com/ice9/free_resources_article_thumb/classapp-extends.JPG)
+
+## 11. What are the differences between Class and Functional Components?
+
+<p>
+    <img src="Screenshot 2021-07-13 at 14.36.35 copy.png" width="500" height="425"/>
+</p>
+
+- State in class components can hold or manage state, whilst Functional components cannot hold or manage state.
+- Class Components are more complex than stateless components (Functional components).
+- Class based components will work with all lifecycle methods whilst Functional components do not work with any lifecycle methods.
+- Class based components can be re-used whilst functional components can't be re-used.
+
+- **Class Components Example:**
+
+![Class-Component](https://www.simplilearn.com/ice9/free_resources_article_thumb/class-components.JPG)
+
+- **Functional Components Example:**
+
+![Functional-Component](https://www.simplilearn.com/ice9/free_resources_article_thumb/functional-components.JPG)
+
+## 12. Explain the lifecycle methods of components. 
+
+- **GetInitialState():** This is executed before the creation of the component. 
+- **ComponentDidMount():** is executed when the component gets rendered and placed on the DOM.
+- **shouldComponentUpdate():** is invoked when a component determines changes to the DOM and returns "true" or "false" value based on certain conditions.
+- **ComponentDidUpdate():** Is invoked immediately after rendering takes place.
+- **ComponentWillUnmount():** Is invoked immediately before a component is destroyed and unmounted permanently.
+
+## 13. What are the features of React?
+
+**JSX** - JSX (JavaScript XML) Is a syntax extension to JavaScript. It is used with React to describe what the user interface should look like. By using JSX, we can write HTML structures in the same file that contains JavaScript code.
+
+**Components:** Components are the building blocks of any React application, and a single app usually consists of multiple Components. It splits the user interface into independent reusable parts that can be processed separately. 
+
+**Virtual DOM:** React keeps a lightweight representation of the real DOM in the memory, and that is known as the virtual DOM. When the state of an object changes, virtual DOM changes only that object in the real DOM, rather than updating all the objects.
+
+**One-way data-binding:** React's one-way data binding keeps everything modular and fast. A unidirectional data flow means that when designing a React app, you must often nest child components within parent components. 
+
+**High Performance** - React updates only those components that have changed, rather than updating all the components at once, this results in much faster web applications.
+
+## 14. Can web browsers read JSX directly?
+
+- Web browsers cannot read JSX directly. This is because they are built to only read regular JS objects and JSX is not a regular JavaScript object.
+- For a web browser to read a JSX file, the file needs to be transformed into a regular JavaScript object. For this, we use Babel.
+
+![Babel](https://www.simplilearn.com/ice9/free_resources_article_thumb/babel.JPG)
+
+## 15. What is the virtual DOM?
+
+DOM stands for Document Object Model. The DOM represents an HTML (Hyper-Text Markup Language) document with a logical tree structure. Each branch of the tree ends in a node, and each node contains objects.
+
+![DOM](https://www.simplilearn.com/ice9/free_resources_article_thumb/virtualdom.JPG)
+
+React keeps a lightweight representation of the real DOM in the memory, and that is known as the virtual DOM. When the state of an object changes, the virtual DOM changes only that object in the real DOM, rather than updating all the objects.
+
+![VirtualDOM](https://www.simplilearn.com/ice9/free_resources_article_thumb/real-dom.JPG)
+
+## 16. Why use React instead of other Frameworks, like Angular?
+
+**Easy creation of dynamic applications:** React makes it easier to create dynamic web applications because it provides less coding and provides more functionality, whereas with JavaScript applications, code tends to get complex very quickly.
+
+**Improved performance:** React uses virtual DOM, which makes web applications perform faster. Virtual DOM compares it's previous state and updates only those components in the real DOM, whose states have changed, rather than updating all the components like conventional web applications.
+
+**Re-usable Components:** Components are the building blocks of any React application, and a single app usually consists of multiple components. These components have their own logic and controls and they can be reused through the application, which in turn dramatically reduces the development time of an application. 
+
+**Unidirectional Data Flow:** React follows a unidirectional data flow. This means that when designing a React App, we often nest child components within parent components. And since the data flows in a single direction, it becomes easier to debug errors and know where the problem occurs in an application at the moment.
+
+**Dedicated tools for Easy Debugging:** Facebook has released a chrome extension that we can use to debug React Applications. This makes the process of debugging React to web applications faster and easier.
+
+## 16. What is an event in React?
+
+An event is an action that a user or system may trigger, such as pressing a key, a mouse click etc.
+
+- **React events are named using camelCase, rather than lowercase in HTML.**
+- **With JSX, you can pass a function as the event handler, rather than a string in HTML.**
+
+```JavaScript
+<Button onPress={lightUp}/>
+```
+
+## 17. What is an event in React?
+
+A React event can be created doing the following:
+
+![Event](https://www.simplilearn.com/ice9/free_resources_article_thumb/question-9.JPG)
+
+## 18. What are Synthetic events in React?
+
+- Synthetic events combine the response of different browser's native events into one API, ensuring that the events are consistent across different browsers. 
+- The application is consistent regardless of the browser it is running in. Here, **preventDefault()** is a synthetic event.
+
+![syntheticEvent](https://www.simplilearn.com/ice9/free_resources_article_thumb/function-app.JPG)
+
+## 19. Explain how lists work in React?
+
+- We create lists in React as we do in Regular JavaScript. Lists display data in an ordered format. 
+- The traversal of lists is done using the map() function.
+
+![List](https://www.simplilearn.com/ice9/free_resources_article_thumb/const.JPG)
+
+## 20. Why is there a need for using keys in Lists?
+
+Keys are very important in lists for the following reasons:
+
+- A key is a unique identifier and it is used to identify which items have changed, been updated or deleted from lists.
+- It also helps to determine which components need to be re-rendered instead of re-rendering all the components every time. Therefore, it increases performance, as only the updated components are re-rendered.
+
+## 21. What are forms in React and how are they created?
+
+React employs forms to enable users to interact with web applications.
+
+- Using forms, users can interact with the application and enter the required information whenever needed. Form container certain elements, such as text fields, buttons, checkboxes and radio buttons etc.
+- Forms are used for many different tasks such as user authentication, searching, filtering, indexing etc. 
+
+We can create froms in React by doing the following: 
+
+![Form](https://www.simplilearn.com/ice9/free_resources_article_thumb/class-name.JPG)
+
+The above code will yield an input field with the label **Na,e** and a submit button. It will also alert the user when the submit button is pressed. 
+
+## 22. What is an arrow function and how is it used in React?
+
+- An arrow function is a short way of writing a function to React.
+- It is unnecessary to bind **'this'** inside the constructor function when using an arrow function. This prevents bugs cause by the use of **'this'** in React callbacks.
+
+**Without Arrow Function**
+
+![Without](https://www.simplilearn.com/ice9/free_resources_article_thumb/arrow.JPG)
+
+**With Arrow Function**
+
+![With](https://www.simplilearn.com/ice9/free_resources_article_thumb/arrow.JPG)
+
+## 23. What is React Router?
+
+React Router is a routing library built on top of React, which is used to create routes in a React application. 
+
+<!-- ## 24. Why do we need to React Router? -->
 # Class-Based-Components
 
 
