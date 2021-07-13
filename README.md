@@ -6,10 +6,12 @@
 
 [React Functional Components VS Class Components](https://medium.com/wesionary-team/react-functional-components-vs-class-components-86a2d2821a22)
 
+[React Class features vs. Hooks equivalents](https://medium.com/soluto-engineering/react-class-features-vs-hooks-equivalents-745368dafdb3)
+
 
 [Understanding Functional Components vs. Class Components in React](https://www.twilio.com/blog/react-choose-functional-components)
 
-## Contents 
+## Index 
 
 [React-Interview-Questions](#React-Interview-Questions)
 
@@ -41,7 +43,7 @@ If the application does not provide the necessary performance, users may leave t
 
 ## 2. What is the difference between between state and props?
 
-![StateVsProps](Screenshot%202021-07-13%20at%2014.03.33.png)
+![StateVsProps](./assets/Screenshot%202021-07-13%20at%2014.03.33.png)
 
 - State can be used to hold information about the components.Whilst Props are used to pass data from one component to other components as arguments.
 - State is mutable (can be changed) whilst Props are immutable (can't be changed).
@@ -124,7 +126,7 @@ We can embed two or more components into one using this method:
 ## 11. What are the differences between Class and Functional Components?
 
 <p>
-    <img src="Screenshot 2021-07-13 at 14.36.35 copy.png" width="500" height="425"/>
+    <img src="./assets/Screenshot 2021-07-13 at 14.36.35 copy.png" width="500" height="425"/>
 </p>
 
 - State in class components can hold or manage state, whilst Functional components cannot hold or manage state.
@@ -257,7 +259,73 @@ The above code will yield an input field with the label **Na,e** and a submit bu
 
 React Router is a routing library built on top of React, which is used to create routes in a React application. 
 
-<!-- ## 24. Why do we need to React Router? -->
+## 24. Why do we need to React Router?
+
+- It maintains consistent structure and behavior and is used to develop single-page web applications
+- Enables multiple views in a single application by defining routes in the React application.
+
+## 25. How is React Routing different from conventional routing?
+
+![React-Routing](./assets/Screenshot%202021-07-13%20at%2014.03.33.png)
+
+- React Routing is a single HTML Page whilst with conventional routing each view is a new HTML file.
+- React routing the user navigates multiple views in the same file whilst with conventional routing the user navigates multiple files for each view. 
+- As it's a single file the page does not refresh in React Router, whilst with conventional Routing the page refreshes every time the user navigates. 
+- Improved performance with React Routing compared to slower performance with conventional routing.
+
+## 26. How do you implement React Routing?
+
+We can implement Routing in our React application using this method: 
+
+Considering we have the components **App, About** and **Contact** in the application
+
+![React-Routing](https://www.simplilearn.com/ice9/free_resources_article_thumb/routing.JPG)
+
+## 27. How do you style React Components?
+
+- Inline Styling
+
+![Inline](https://www.simplilearn.com/ice9/free_resources_article_thumb/class-simple.JPG)
+
+```JavaScript
+class Simple extends React.Component {
+    render() {
+        return (
+            <div>
+            <h1 style={{color: "blue"}}>Hello Simple!</h1>
+            </div>
+        );
+    }
+}
+```
+
+- JavaScript Object
+
+![Object](https://www.simplilearn.com/ice9/free_resources_article_thumb/hello-simple.JPG)
+
+
+```JavaScript
+class Simple extends React.Component {
+    render() {
+        const simpleStyle = {
+            color: "White",
+            backgroundColor: "Green",
+            margin: "8px",
+            fontFamily: "Open Sans"
+        }
+        return (
+            <div>
+            <h1 style={simpleStyle}>Hello Simple!</h1> 
+            </div>
+        );
+    }
+}
+```
+
+## 28. What is Redux? 
+
+Redux is an open-source, JavaScript library used to manage the application state. React uses Redux to build the user interface. It is a predictable state container for JavaScript applications and is used for the entire applications state management. 
+
 # Class-Based-Components
 
 
