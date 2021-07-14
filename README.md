@@ -19,6 +19,8 @@
 
 [Functional-Components](#Functional-Components)
 
+[React Class features vs. Hooks equivalents](#React-Class-features-vs-Hooks-equivalents)
+
 
 # React-Interview-Questions
 
@@ -236,7 +238,7 @@ React employs forms to enable users to interact with web applications.
 - Using forms, users can interact with the application and enter the required information whenever needed. Form container certain elements, such as text fields, buttons, checkboxes and radio buttons etc.
 - Forms are used for many different tasks such as user authentication, searching, filtering, indexing etc. 
 
-We can create froms in React by doing the following: 
+We can create forms in React by doing the following: 
 
 ![Form](https://www.simplilearn.com/ice9/free_resources_article_thumb/class-name.JPG)
 
@@ -326,8 +328,178 @@ class Simple extends React.Component {
 
 Redux is an open-source, JavaScript library used to manage the application state. React uses Redux to build the user interface. It is a predictable state container for JavaScript applications and is used for the entire applications state management. 
 
+# Functional-Components
+## Introduction to Component 
+
+- A component represent the part of user interface.
+- Components are re-usable and can be used anywhere in user interface.
+
+**Functional Components or Stateless Component**
+
+- It is simple JavaScript functions that simply returns HTML UI.
+- It is also called "stateless" components because they simply accept data and display them in some form that is they are mainly responsible for rendering UI.
+- It accepts properties (props) in function and returns HTML (JSX).
+- It gives solution without using state.
+- There is no render method used in functional components.
+- These can be typically defined using arrow functions but can also be created with the regular function keyword.
+
+```JavaScript
+// With Arrow Function
+
+import React from "react";
+
+const Person = (props) => (
+    <div>
+    <h1>Hello, {props.name}</h1>
+    </div>
+);
+
+export default Person
+
+import React from "react";
+
+function Person(props) {
+    return (
+        <div>
+        <h1>Hello, {props.name}</h1>
+        </div>
+    )
+}
+
+export default Person;
+```
+
+Lifecycle method or Lifecycle hooks in functional component. 
+
+Component lifecycle method does not exist in functional components, because a functional component is just a plain JavaScript function, we cannot use setState() method inside a component. That's why they also get called functional stateless components. 
+
+We can use React Hooks in functional component, useEffect() hook can be used to replicate **lifecycle behavior**, and **useState** can be used to store state in a functional component.
+
+```JavaScript
+// Example
+
+const User = (props) => {
+    const [values, setValues] = useState({
+        email: "",
+        password: ""
+    })
+
+    useEffect(() => {
+        if (!props.fetched) {
+            props.fetchData()
+        }
+        console.log("Mount It")
+    }, [])
+    // NOTE: By passing an empty array as second argument triggers the callback in useEffect only after the initial render this replicating "componentDidMount" lifecycle behavior.
+    return(
+
+     )
+    } 
+
+// useEffect can also return a function that will be run when the component is unmounted. This can be used to unsubscribe to listeners and can be used to replicate the componentWillUnmount behavior.
+
+// E.g. componentWillUnmount
+
+useEffect(() => {
+    window.addEventListener("unhandledRejection", handler)
+    return () => {
+    window.removeEventListener("unhandledRejection", handler)
+    }
+}, [])
+```
+  
 # Class-Based-Components
 
+- It is regular ES6 classes that extends component class from React Library.
+- Also known as "Stateful" components because they implement logic and state. 
+- It must have render() method returning HTML
+- It has complex UI Logic
+- You pass props to class components and access them with this.props.
 
+```JavaScript
+// Example
+import React, { Component } from "react"
 
-# Functional-Components
+class Person extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: "Bikash";
+        }
+    }
+
+    render() {
+        return (
+            <div>
+            <h1>Hello {this.state.name}</h1>
+            </div>
+        )
+    }
+}
+
+export default Person;
+```
+
+**Lifecycle method or Lifecycle hooks in class Component**
+
+***
+
+The lifecycle hooks of class component can be classified in 4 phases.
+
+1. **Mounting():**
+
+- When an instance of a component is being created and inserted into the DOM.
+- It has 4 method constructor(), static, getDerivedStateFromProps(), render() and componentDidMount()
+
+**a.constructor(props)**
+- A special function that will get called whenever a new component is created.
+- Initializing the state binding the event handler 
+- super(props) that directly over writes this.state (b.static.getDerivedStateFromProps(props, state))
+- When the state of the component depends on changes c.render():
+- We read props and state and return JSX (d.componentDidMount())
+- Invoked immediately after a component and all it's children components have been rendered to the DOM.
+
+2. **Updating():**
+
+- When a component is being re-rendered as a result of change to either it's props or state.
+- It has 5 lifecycle static (getDerivedStateFromProps(), shouldComponentUpdate(), render(), getSnapshotUpdate() and componentDidUpdate())
+
+**a.getDerivedStateFromProps()**
+
+- This is the first method that is called when a component gets updated.
+- This is still the natural place to set the state object based on the initial props.
+  
+**b.shouldComponentUpdate()**
+
+- In this method you can return a Boolean value that specifies whether React should continue with the rendering or not.
+- The default value is true.
+
+**c.getSnapshotBeforeUpdate()**
+
+- The getSnapshotBeforeUpdate() method you have access to the props and state before the update, meaning that even after the update, you can check what the values were before the update.
+- If the getSnapshotBeforeUpdate() method is present, you should also include the componentDidUpdate() method, otherwise you'll get an error. 
+
+**d.ComponentDidUpdate()**
+
+- The componentDidUpdate() method is called after the component is updated in the DOM.
+
+3. **UnMounting**
+
+- Used when component is being removed from the DOM.
+- It has 1 lifecycle componentWillUnmount().
+
+4. **Error Handling**
+
+- When there is an error during rendering.
+- It has 2 lifecycle static getDerivedStateFromProps() and componentDidCatch().
+
+**Why use a functional components instead of a class component?**
+
+Benefits you get by using functional components in React:
+
+1) Functional components are much easier to read and test because they are plain JavaScript functions without state or lifecycle-hooks.
+2) It has less code which makes it more readable.
+3) It will get easier to separate container and presentational components because you need to think more about your component's state if you don't have access to setState() in your component.
+
+# React-Class-features-vs-Hooks-equivalents
+ 
