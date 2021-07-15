@@ -21,6 +21,8 @@
 
 [React Class features vs. Hooks equivalents](#React-Class-features-vs-Hooks-equivalents)
 
+[Understanding Functional Components vs. Class Components in React](#Functional-Components-vs-Class-Components-in-React)
+
 
 # React-Interview-Questions
 
@@ -503,3 +505,333 @@ Benefits you get by using functional components in React:
 
 # React-Class-features-vs-Hooks-equivalents
  
+**Class features vs. Hooks equivalents**
+
+**State**
+
+```JavaScript
+// Class
+
+class CounterButton extends Component {
+    constructor() {
+        super();
+        this.state = {
+            count: 0
+        }
+    }
+
+    render() {
+        return <button onClick={() => this.setState({ count: this.state.count + 1})}> 
+            { this.state.count }
+        </button>
+    }
+}
+
+// Hooks
+const CounterButton = props => {
+    const [count, setCount] = useState(0);
+
+    return <button onClick={() => setCount(count + 1)}>
+            { count }
+    </button>
+}
+```
+
+**ComponentDidMount()**
+
+```JavaScript
+// Class 
+componentDidMount() {
+    console.log("I just mounted")
+}
+
+// Hooks
+useEffect(() => {
+    console.log("I just mounted")
+}, [])
+```
+
+**ComponentWillUnmount**
+
+```JavaScript
+// Class
+componentWillUnmount() {
+    console.log("I am un-mounting")
+}
+
+// Hooks
+useEffect(() => {
+    return () => console.log("I am un-mounting")
+}, [])
+```
+
+**ComponentWillReceiveProps / ComponentDidUpdate**
+
+```JavaScript
+// Class
+componentWillReceiveProps(nextProps) {
+    if (nextProps.count !== this.props.count) {
+        console.log("Count changed", nextProps.count)
+    }
+}
+
+// Hooks
+// Printing 1st iteration
+useEffect(() => {
+    console.log("Count changed", props.count)
+}, [props.count])
+
+// Skipping first iteration (Exactly like componentWillReceiveProps);
+const isFirstRun = useRef(true)
+useEffect(() => {
+    if (isFirstRun.current) {
+        isFirstRun.current = false
+        return;
+    }
+    console.log("Count changed", props.count);
+}, [props.count]);
+
+// Class
+componentDidUpdate() {
+    console.log("Just updated...")
+}
+
+useEffect(() => {
+    console.log("Just updated...");
+})
+```
+
+**DOM Refs**
+
+```JavaScript
+// Class
+class InputWithFocus extends React.Component {
+    constructor() {
+        super();
+        this.inputRef = null;
+    }
+    render() {
+        return 
+        <div>
+        <input ref={inputRef => { this.inputRef = inputRef }}/>
+            <button onClick={() => this.inputRef.focus()}>
+                Focus the input
+            </button>
+        </div>
+    }
+}
+
+// Hooks
+const InputWithFocus = (props) => {
+    const inputRef = useRef(null);
+
+    return 
+    <div>
+        <input ref={inputRef} />
+        <button onClick={() => inputRef.current.focus()}>
+            Focus the input
+        </button>
+    </div>
+}
+```
+
+**this.myVar**
+
+useRef has another cool usage besides DOM refs, it is also a generic container whose current property is mutable and can hold any value, similar to an instance property on a class.
+
+For example, to keep an interval id:
+
+```JavaScript
+const Timer = (props) => {
+    const intervalRef = useRef();
+
+    useEffect(() => {
+        const id = setInterval(() => {
+            // ...
+        })
+    })
+}
+```
+
+**Comparing with the previous state/props**
+
+- Same lifecycle method, like componentDidUpdate, provides the previous state and props.
+- If you really need the previous values for your Hooks, this can be imitated the following way (using yet again our good friend - useRef):
+
+```JavaScript
+const Counter = props => {
+    const [count, setCount] = useState(0);
+
+    const prevCountRef = useRef();
+    useEffect(() => {
+        prevCountRef.current = count
+    })
+    const prevCount = prevCountRef.current;
+
+    return <h1>Now: {count}, before: {prevCount}</h1>
+}
+```
+
+**ShouldComponentUpdate**
+
+We gonna use memo for this one, while this is not a Hook, it's still part of the class-to-functional-component migration plan:
+
+```JavaScript
+// Class
+shouldComponentUpdate(nextProps) {
+    return nextProps.count !== this.props.count
+}
+
+// memo 
+import React, { memo } from "react"
+
+const MyComponent = memo(
+    _MyComponent,
+    // Notice condition is inversed from shouldComponentUpdate
+    (prevProps, nextProps) => nextProps.count === prevProps.count
+)
+```
+
+And that is React Hooks in a nutshell
+
+# Functional-Components-vs-Class-Components-in-React
+
+Recently functional components are becoming more and more popular so why is that?
+
+***
+
+**Rendering JSX**
+
+First of all, the clear difference is the syntax. Just like in their names, **a functional component is just a plain JavaScript function that returns JSX**. A class component is a JavaScript class that extends React.Component which has a render method.
+
+```JavaScript
+import React from "react"
+
+const FunctionalComponent = () => {
+    return <h1>Hello, world</h1>;
+}
+```
+
+As you can see, a functional component is a function that returns JSX. If you are not familiar with arrow functions introduced in ES6, here is an example without them.
+
+```JavaScript
+import React from "react"
+
+function FunctionalComponent() {
+    return <h1>Hello, world</h1>
+}
+```
+
+Below is the same example but without destructuring. 
+
+```JavaScript
+import React from "react";
+
+class ClassComponent extends React.Component {
+    render() {
+        return <h1>Hello, world</h1>
+    }
+}
+```
+
+**Passing Props**
+
+Passing props can be confusing but below is how they're written in both class and functional components. 
+
+```JavaScript
+// Component to be passed in.
+
+<Component name="Shiori"/>
+```
+
+```JavaScript
+const FunctionalComponent = ({ name } => {
+    return <h1>Hello, {name}</h1>;
+})
+```
+
+Inside a functional component, we are passing props as an argument of the function. Note that was are using destructing here. Alternatively we can write it without too.
+
+```JavaScript
+const FunctionalComponent = (props) => {
+    return <h1>Hello, {props.name}</h1>;
+}
+```
+
+In this case, you have to use props.name instead of name.
+
+```JavaScript
+class ClassComponent extends React.Component {
+    render() {
+        const { name } = this.props;
+        return <h1>Hello, { name }</h1>;
+    }
+}
+```
+
+Since it is a class, you need to use **this** to refer to props. And of course, we can use destructuring to get **name** inside props while utilising class-based components.
+
+**Handling State**
+
+Now we all know that we cannot avoid dealing with state variables in a React project. Handling state was only doable in a class component until recently. But now with React 16.8, React Hook **useState** was introduced to allow developers to write stateful functional components. Below is a simple counter that starts from 0, and one click on the button will increment the counter by 1.
+
+**Handling State in functional Components**
+
+```JavaScript
+function FunctionalComponent() {
+    const [count, setCount] = React.useState(0);
+
+    return (
+        <div>
+            <p>count: {count}</p>
+            <button onClick={() => setCount(count + 1)}>Click</button>
+        </div>
+    );
+};
+```
+
+To use state variables in a functional component, we need to use a useState Hook, which takes an argument of initial state. In this case we start with 0 clicks so the initial state of the count will be 0.
+
+Of course you can have more variety of initial state including **null, string** or even **object.** - any type that JavaScript allows! And on the left, as useState returns the current state and function that updates it, we are destructuring an the array like this. You can consider the two elements of the array the **state and the setter**. In this example we named them **Count** and **setCount** to make it easy to understand the connection between the two.
+
+**Handling State in Class Components**
+
+```JavaScript
+class ClassComponent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            count: 0
+        }
+    }
+
+    render() {
+        return (
+            <div>
+                <p>count: {this.state.count} times</p>
+                <button onClick={() => this.setState({ count: this.state.count + 1})}> 
+                Click
+                </button>
+            </div>
+        )
+    }
+}
+```
+
+The idea is still the same but a class component handles state a bit differently. Firstly, we need to understand the importance of the React.Component constructor. here is a [link](https://reactjs.org/docs/react-component.html#constructor).
+
+**The constructor for a React component is called before it's mounted. When implementing the constructor for a React.Component subclass, you should call super(props) before any other statement. Otherwise, this.props will be undefined in the constructor, which can lead to bugs.**
+
+Essentially, without implementing the constructor and calling super(props), all the state variables that you are trying to use will be undefined. So let's define the constructor first. Inside the constructor, you will make a state object with a state key and initial value. And inside JSX, we use **this.state.count** to access the value of the state key we defined in the constructor to display the count. Setter is pretty much the same, just different syntax.
+
+Alternatively, you can write an **onClick** function. Remember, the **setState** function takes argument(s) of state, props(optional) if needed.
+
+```JavaScript
+onClick={() => {
+    this.setState((state) => {
+        return { count: state.count + 1 }
+    }
+}}
+```
+
+**Lifecycle Methods**
