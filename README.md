@@ -835,3 +835,70 @@ onClick={() => {
 ```
 
 **Lifecycle Methods**
+
+Finally, let's talk about lifecycles. As you know, lifecycles play an important role in the timing of rendering. For those who are migrating from class components to functional cpmponents, you must be wondering what could replace lifecycle methods such as componentDidMount() in a class component. And yes, there is a hook that works perfectly for that purpose.
+
+**On Mounting (componentDidMount)**
+
+The lifecycle method **componentDidMount** is called right after the first render completes. There used to be a componentWillMount that happens before the first render, but it is considered legacy and not recommended to use in newer versions of React.
+
+```JavaScript
+const FunctionalComponent = () => {
+    React.useEffect(() => {
+        console.log("Hello")
+    }, []);
+    return <h1>Hello, World</h1>
+}
+```
+
+Replacing **componentDidMount**, we use the useEffect hook with the second argument of **[]**. The second argument of the **useState** hook is normally an array of a state(s) that changes, and **useEffect** will only be called on these selected changes. But when it's an empty array like this example, it will be called once on mounting. This is a perfect replacement for a **componentDidMount**. 
+
+```JavaScript
+class ClassComponent extends React.Component {
+    componentDidMount() {
+        console.log("Hello")
+    }
+
+    render() {
+        return <h1>Hello, World</h1>
+    }
+}
+```
+
+Essentially the same thing happens here with: **componentDidMount** is a lifecycle method that is called once after the first render. 
+
+**On Unmounting (componentWillUnmount**)
+
+```JavaScript
+const FunctionalComponent = () => {
+    React.useEffect(() => {
+        return () => { // Component is un-mounting.
+            console.log("Bye")
+        }
+    }, [])
+    return <h1>Bye, World</h1>
+};
+```
+
+I am happy to tell you that we can also use a **useState** hook for un-mounting as well. But be careful, the syntax is a bit different. **What you need to do is return a function that runs on un-mounting** inside the **useEffect** function. This is especially useful when you have to clean up the subscriptions such as a clearInterval function, otherwise it can cause a severe memory leak on a bigger project. One advantage of using **useEffect** is that we can write functions for both mounting and un-mounting in the same place.
+
+```JavaScript
+class ClassComponent extends React.Component {
+    componentWillUnmount() {
+        console.log("Bye")
+     }
+
+     render() {
+         return <h1>Bye, World</h1>
+     }
+}
+```
+
+<!-- a Functional Component is just a JavaScript function that returns some JSX -->
+
+**Conclusion**
+
+There are pros anc cons in both styles but Functional Components are taking over modern React in the foreseeable future.
+
+A functional component is written shorter and simpler, which makes it easier to develop, understand, and test. Class components can also be confusing with so many uses of **this**. Using functional components can 
+
